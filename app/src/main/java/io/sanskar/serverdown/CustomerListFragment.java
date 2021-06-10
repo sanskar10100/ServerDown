@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-
 import io.sanskar.serverdown.adapters.CustomerListAdapter;
-import io.sanskar.serverdown.data.Customer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +42,7 @@ public class CustomerListFragment extends Fragment {
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_customer_list);
-        recyclerView.setAdapter(new CustomerListAdapter(Collections.singletonList(new Customer(1, "Sanskar", "sanskar10100@gmail.com", 10000))));
+        recyclerView.setAdapter(new CustomerListAdapter(Constants.database.customerDao().getAllCustomers()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
