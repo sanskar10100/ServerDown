@@ -3,6 +3,7 @@ package io.sanskar.serverdown.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,8 +39,8 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         Customer customer = customers.get(position);
         holder.customerName.setText(customer.name);
         holder.customerEmail.setText(customer.email);
-        holder.customerBalance.setText(String.valueOf(customer.balance));
-        holder.customerAccountNumber.setText(String.valueOf(customer.accountNumber));
+        holder.customerBalance.setText("₹" + String.valueOf(customer.balance));
+        holder.customerAccountNumber.setText("A/C Num: " + String.valueOf(customer.accountNumber));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         TextView customerAccountNumber;
         boolean collapsed = true;
         ConstraintLayout hiddenLayout;
-        TextView transferMoneyButton;
+        Button transferMoneyButton;
 
         public ViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);

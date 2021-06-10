@@ -54,21 +54,27 @@
                 android:id="@+id/textView_customer_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_baseline_account_balance_wallet_24"
+                android:drawablePadding="8dp"
                 android:text="Balance"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_customer_email" />
 
             <TextView
                 android:id="@+id/textView_customer_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawablePadding="8dp"
                 android:text="Email"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,29 +82,28 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_margin="16dp"
                 android:layout_weight="1"
+                android:layout_marginTop="8dp"
                 android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_customer_balance"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView_customer_email" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
+            <Button
                 android:id="@+id/button_customer_transfer_money"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:drawableLeft="@drawable/ic_baseline_transactions_24"
-                android:drawablePadding="8dp"
                 android:foreground="?attr/selectableItemBackground"
+                android:layout_margin="8dp"
+                android:padding="8dp"
                 android:text="Transfer Money"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
-                android:padding="8dp"
+                app:icon="@drawable/ic_baseline_transactions_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider"
-                android:focusable="true" />
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
