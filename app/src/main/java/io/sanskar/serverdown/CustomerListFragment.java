@@ -3,6 +3,8 @@ package io.sanskar.serverdown;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,7 @@ public class CustomerListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setEnterTransition(new Explode());
         return inflater.inflate(R.layout.fragment_customer_list, container, false);
     }
 
@@ -74,10 +77,23 @@ public class CustomerListFragment extends Fragment {
         creditCustomer.balance += transferAmount;
         Constants.database.customerDao().updateCustomers(debitCustomer, creditCustomer);
         Constants.database.transactionDao().insertAll(new Transaction(debitCustomer.accountNumber, creditCustomer.accountNumber, debitCustomer.name, creditCustomer.name, transferAmount));
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                activityContext.getSupportFragmentManager()
+                        .beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fragment_container, CustomerListFragment.class, null)
+                        .commit();
+                Toast.makeText(activityContext, "Transaction Successful!", Toast.LENGTH_SHORT).show();
+            }
+        }, 1000);
+
         activityContext.getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.fragment_container, CustomerListFragment.class, null)
+                .replace(R.id.fragment_container, LoadingFragment.class, null)
                 .commit();
     }
 
