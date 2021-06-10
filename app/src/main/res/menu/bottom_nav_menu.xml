@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="List"
+        android:id="@+id/action_customers"
+        android:title="Customers"
         android:icon="@drawable/ic_baseline_list_24"
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_transactions"
         android:title="Transactions"
         android:icon="@drawable/ic_baseline_transactions_24"
         app:showAsAction="ifRoom" />

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,6 +18,32 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .add(R.id.fragment_container, CustomerListFragment.class, null)
                 .commit();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav_bar);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_customers: {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_container, CustomerListFragment.class, null)
+                            .commit();
+                    break;
+                }
+
+                case R.id.action_transactions: {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_container, TransactionListFragment.class, null)
+                            .commit();
+                    break;
+                }
+            }
+
+            item.setChecked(true);
+            return true;
+        });
 
     }
 }
