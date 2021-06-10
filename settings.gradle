@@ -1,0 +1,2 @@
+rootProject.name = "Server Down"
+include ':app'
