@@ -3,16 +3,21 @@ package io.sanskar.serverdown;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    public final ServerDownDatabase databaseDefinition =
+            Room.databaseBuilder(getApplicationContext(), ServerDownDatabase.class, "server-down").build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Customers");
+        Constants.database = this.databaseDefinition;
 
         getSupportFragmentManager()
                 .beginTransaction()
