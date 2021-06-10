@@ -18,8 +18,8 @@ import io.sanskar.serverdown.R;
 import io.sanskar.serverdown.data.Customer;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ViewHolder> {
+    private static boolean transferMode = false;
     private List<Customer> customers;
-    private boolean transferMode = false;
 
     public CustomerListAdapter(final List<Customer> customers, final boolean transferMode) {
         this.customers = customers;
@@ -66,19 +66,23 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             transferMoneyButton = itemView.findViewById(R.id.button_customer_transfer_money);
 
             itemView.setOnClickListener(v -> {
-                if (collapsed) {
-                    hiddenLayout.setVisibility(View.VISIBLE);
-                    collapsed = false;
+                if (transferMode) {
+                    int itemPosition = getAdapterPosition();
+                    CustomerListFragment.beneficiarySelected(itemPosition);
                 } else {
-                    hiddenLayout.setVisibility(View.GONE);
-                    collapsed = true;
+                    if (collapsed) {
+                        hiddenLayout.setVisibility(View.VISIBLE);
+                        collapsed = false;
+                    } else {
+                        hiddenLayout.setVisibility(View.GONE);
+                        collapsed = true;
+                    }
                 }
             });
 
             transferMoneyButton.setOnClickListener(v -> {
                 int itemPosition = getAdapterPosition();
                 CustomerListFragment.transferAmount(itemPosition);
-
             });
         }
     }

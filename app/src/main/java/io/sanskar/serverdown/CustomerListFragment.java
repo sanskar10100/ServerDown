@@ -23,6 +23,7 @@ import java.util.List;
 
 import io.sanskar.serverdown.adapters.CustomerListAdapter;
 import io.sanskar.serverdown.data.Customer;
+import io.sanskar.serverdown.data.Transaction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +32,12 @@ import io.sanskar.serverdown.data.Customer;
  */
 public class CustomerListFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    private static RecyclerView recyclerView;
     private static List<Customer> customers;
     private static FragmentActivity currentContext;
+    private static Customer debitCustomer = null;
+    private static Customer creditCustomer = null;
+    private static int transferAmount = 0;
 
     public CustomerListFragment() {
         // Required empty public constructor
@@ -59,6 +63,20 @@ public class CustomerListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    public static void beneficiarySelected(int itemPosition) {
+        creditCustomer = customers.get(itemPosition);
+        // Transfer the amount
+        debitCustomer.balance -= transferAmount;
+        creditCustomer.balance += transferAmount;
+        Constants.database.customerDao().updateCustomers(debitCustomer, creditCustomer);
+        Constants.database.transactionDao().insertAll(new Transaction(debitCustomer.accountNumber, creditCustomer.accountNumber, debitCustomer.name, creditCustomer.name, transferAmount));
+        currentContext.getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container, CustomerListFragment.class, null)
+                .commit();
+    }
+
     public static void transferAmount(int itemPosition) {
         Customer customer = customers.get(itemPosition);
         View inflatedLayout = currentContext.getLayoutInflater().inflate(R.layout.dialog_transfer_amount, null);
@@ -81,15 +99,15 @@ public class CustomerListFragment extends Fragment {
 
         EditText amountEditText = inflatedLayout.findViewById(R.id.editText_transfer_amount);
         Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int amount = Integer.parseInt(amountEditText.getText().toString());
-                if (amount > customer.balance) {
-                    Toast.makeText(currentContext, "Amount cannot be greater than the current balance!", Toast.LENGTH_SHORT).show();
-                } else {
-                    dialog.dismiss();
-                }
+        positiveButton.setOnClickListener(v -> {
+            int amount = Integer.parseInt(amountEditText.getText().toString());
+            if (amount > customer.balance) {
+                Toast.makeText(currentContext, "Amount cannot be greater than the current balance!", Toast.LENGTH_SHORT).show();
+            } else {
+                transferAmount = amount;
+                debitCustomer = customer;
+                recyclerView.setAdapter(new CustomerListAdapter(customers, true));
+                dialog.dismiss();
             }
         });
     }

@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-
 import io.sanskar.serverdown.adapters.TransactionListAdapter;
-import io.sanskar.serverdown.data.Transaction;
 
 public class TransactionListFragment extends Fragment {
 
@@ -40,7 +37,7 @@ public class TransactionListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_transaction_list);
-        recyclerView.setAdapter(new TransactionListAdapter(Collections.singletonList(new Transaction(001, 002, "Sanskar", "Som", 1000))));
+        recyclerView.setAdapter(new TransactionListAdapter(Constants.database.transactionDao().getAllTransactions()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
