@@ -36,7 +36,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         holder.creditAccountNumber.setText(String.valueOf(transaction.creditAccountNumber));
         holder.debitAccountNumber.setText(String.valueOf(transaction.debitAccountNumber));
         holder.debitAccountName.setText(transaction.debitAccountName);
-        holder.amount.setText(transaction.amount);
+        holder.amount.setText(String.valueOf(transaction.amount));
     }
 
     @Override

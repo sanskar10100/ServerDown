@@ -20,6 +20,10 @@ import io.sanskar.serverdown.data.Transaction;
 
 public class TransactionListFragment extends Fragment {
 
+    public TransactionListFragment() {
+
+    }
+
     public static TransactionListFragment newInstance() {
         return new TransactionListFragment();
     }
@@ -28,7 +32,7 @@ public class TransactionListFragment extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_transaction_list, container, false);
     }
 
     @Override
