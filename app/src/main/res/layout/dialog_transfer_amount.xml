@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
+        android:drawableLeft="@drawable/ic_baseline_transactions_24"
+        android:drawablePadding="8dp"
         android:hint="Amount"
         android:inputType="number"
         android:selectAllOnFocus="true"
