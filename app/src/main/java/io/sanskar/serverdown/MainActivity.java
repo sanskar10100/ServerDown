@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Customers");
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_customers: {
+                    getSupportActionBar().setTitle("Customers");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setReorderingAllowed(true)
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 case R.id.action_transactions: {
+                    getSupportActionBar().setTitle("Transactions");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setReorderingAllowed(true)
@@ -44,6 +47,5 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(true);
             return true;
         });
-
     }
 }
