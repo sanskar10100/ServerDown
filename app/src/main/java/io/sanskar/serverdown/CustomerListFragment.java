@@ -34,10 +34,11 @@ public class CustomerListFragment extends Fragment {
 
     private static RecyclerView recyclerView;
     private static List<Customer> customers;
-    private static FragmentActivity currentContext;
+    private static FragmentActivity activityContext;
     private static Customer debitCustomer = null;
     private static Customer creditCustomer = null;
     private static int transferAmount = 0;
+    private static CustomerListFragment currentContext;
 
     public CustomerListFragment() {
         // Required empty public constructor
@@ -56,7 +57,10 @@ public class CustomerListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        currentContext = requireActivity();
+        activityContext = requireActivity();
+        currentContext = this;
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Customers");
+        ((MainActivity) getActivity()).findViewById(R.id.bottom_nav_bar).setVisibility(View.VISIBLE);
         customers = Constants.database.customerDao().getAllCustomers();
         recyclerView = view.findViewById(R.id.recyclerview_customer_list);
         recyclerView.setAdapter(new CustomerListAdapter(customers, false));
@@ -70,7 +74,7 @@ public class CustomerListFragment extends Fragment {
         creditCustomer.balance += transferAmount;
         Constants.database.customerDao().updateCustomers(debitCustomer, creditCustomer);
         Constants.database.transactionDao().insertAll(new Transaction(debitCustomer.accountNumber, creditCustomer.accountNumber, debitCustomer.name, creditCustomer.name, transferAmount));
-        currentContext.getSupportFragmentManager()
+        activityContext.getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_container, CustomerListFragment.class, null)
@@ -79,8 +83,8 @@ public class CustomerListFragment extends Fragment {
 
     public static void transferAmount(int itemPosition) {
         Customer customer = customers.get(itemPosition);
-        View inflatedLayout = currentContext.getLayoutInflater().inflate(R.layout.dialog_transfer_amount, null);
-        AlertDialog dialog = new AlertDialog.Builder(currentContext)
+        View inflatedLayout = activityContext.getLayoutInflater().inflate(R.layout.dialog_transfer_amount, null);
+        AlertDialog dialog = new AlertDialog.Builder(activityContext)
                 .setView(inflatedLayout)
                 .setPositiveButton("Next", new DialogInterface.OnClickListener() {
                     @Override
@@ -102,11 +106,13 @@ public class CustomerListFragment extends Fragment {
         positiveButton.setOnClickListener(v -> {
             int amount = Integer.parseInt(amountEditText.getText().toString());
             if (amount > customer.balance) {
-                Toast.makeText(currentContext, "Amount cannot be greater than the current balance!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activityContext, "Amount cannot be greater than the current balance!", Toast.LENGTH_SHORT).show();
             } else {
                 transferAmount = amount;
                 debitCustomer = customer;
                 recyclerView.setAdapter(new CustomerListAdapter(customers, true));
+                ((MainActivity) currentContext.getActivity()).getSupportActionBar().setTitle("Choose Beneficiary");
+                ((MainActivity) currentContext.getActivity()).findViewById(R.id.bottom_nav_bar).setVisibility(View.GONE);
                 dialog.dismiss();
             }
         });
