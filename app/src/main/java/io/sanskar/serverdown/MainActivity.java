@@ -17,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Customers");
-        Constants.database = Room.databaseBuilder(getApplicationContext(), ServerDownDatabase.class, "server-down").allowMainThreadQueries().build();
+        Constants.database = Room.databaseBuilder(getApplicationContext(), ServerDownDatabase.class, "server-down")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
         instantiateCustomerDatabase();
 
         getSupportFragmentManager()
