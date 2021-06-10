@@ -1,6 +1,7 @@
 package io.sanskar.serverdown.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface CustomerDao {
 
     @Query("SELECT * FROM customers")
     List<Customer> getAllCustomers();
+
+    @Insert
+    void insertAll(Customer... customers);
 }
