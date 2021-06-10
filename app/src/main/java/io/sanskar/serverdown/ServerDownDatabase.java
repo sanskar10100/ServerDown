@@ -8,7 +8,7 @@ import io.sanskar.serverdown.dao.TransactionDao;
 import io.sanskar.serverdown.data.Customer;
 import io.sanskar.serverdown.data.Transaction;
 
-@Database(entities = {Customer.class, Transaction.class}, version = 1)
+@Database(entities = {Customer.class, Transaction.class}, version = 2)
 public abstract class ServerDownDatabase extends RoomDatabase {
     public abstract CustomerDao customerDao();
     public abstract TransactionDao transactionDao();
