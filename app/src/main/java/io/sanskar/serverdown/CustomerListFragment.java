@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 
 import io.sanskar.serverdown.adapters.CustomerListAdapter;
-import io.sanskar.serverdown.adapters.data.Customer;
+import io.sanskar.serverdown.data.Customer;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package io.sanskar.serverdown.adapters.data;
+package io.sanskar.serverdown.data;
 
 public class Customer {
     public int accountNumber;

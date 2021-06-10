@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import io.sanskar.serverdown.R;
-import io.sanskar.serverdown.adapters.data.Customer;
+import io.sanskar.serverdown.data.Customer;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ViewHolder> {
     private List<Customer> customers;
